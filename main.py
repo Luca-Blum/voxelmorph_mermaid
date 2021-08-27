@@ -34,10 +34,11 @@ try:
     preprocess = args.preprocessing
     retrain_path = args.retrain_path
     loss = args.regularization_loss
-
-except:
+    
+except KeyError:
     e = sys.exc_info()[0]
     print(e)
+
 
 if case == 't1':
 
