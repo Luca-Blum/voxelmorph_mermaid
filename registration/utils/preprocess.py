@@ -66,6 +66,8 @@ class Preprocess:
         for idx, unpr in enumerate(unprocessed_files):
             if unpr[0:6] != processed_files[idx][0:6]:
                 print(unpr)
+                print(unpr[0:6])
+                print(processed_files[idx][0:6])
                 print(processed_files[idx])
 
         if len(unprocessed_files) == len(processed_files):
