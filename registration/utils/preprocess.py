@@ -65,6 +65,10 @@ class Preprocess:
 
         print(len(unprocessed_files))
         print(len(processed_files))
+
+        print(unprocessed_files)
+        print(processed_files)
+
         return None
 
         skull_stripping_input = path_unprocessed
