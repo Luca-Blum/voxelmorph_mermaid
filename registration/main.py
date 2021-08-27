@@ -119,10 +119,12 @@ if __name__ == '__main__':
                 pp_t2 = Preprocess(dh_t2)
                 pp_t2.preprocess()
 
+            """
             if retrain_path is None:
                 nw_t2.train_vxm()
             else:
                 nw_t2.train_from_weights_vxm(retrain_path)
+            """
 
     elif case == 't1t2':
 
