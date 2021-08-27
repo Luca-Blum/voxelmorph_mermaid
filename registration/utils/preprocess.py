@@ -70,6 +70,8 @@ class Preprocess:
         print()
         print()
         print(processed_files)
+        print("SETS")
+        print()
         print(list(set(unprocessed_files) - set(processed_files)))
         return None
 
