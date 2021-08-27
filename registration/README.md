@@ -7,13 +7,13 @@ which contains the directory for the original data {brain_t1, brain_t2} and a 'h
 T1 weighted brain MRI and T2 weighted brain MRI are supported. The original data folder is expected to contain *nii.gz files
 There are three possible cases.
 
-1. t1: &nbsp;&nbsp;&nbsp;&nbsp;  intra-modal T1w MRI
-2. t2:  &nbsp;&nbsp;&nbsp;&nbsp; intra-modal T2w MRI
-3. t1t2: &nbsp; inter-modal T1w-T2w MRI
+- t1: &nbsp;&nbsp;&nbsp;&nbsp;  intra-modal T1w MRI
+- t2:  &nbsp;&nbsp;&nbsp;&nbsp; intra-modal T2w MRI
+- t1t2: &nbsp; inter-modal T1w-T2w MRI
 
 The base usage is:
 
-- python3 main.py -c case -pp True
+- python3 main.py -c --case -pp True
 
 This will preprocess the original data and stores the result in 'home/case/results'. Afterwards a default voxelmorph model is
 trained. In 'home/case/results' a folder for the weights of the voxelmorph model gets stored. For all three cases the preprocessing applies
@@ -24,13 +24,15 @@ than the following can be used:
 
 - python3 main.py -c --case 
 
-This expects that the data is stored in 'home/case/results'. If you want to train a previously trained
+This expects that the data is stored in 'home/case/results'. 
+
+If you want to train a previously trained
 voxelmorph model further than you can give the path to the folder with the corresponding weights by using the -rp flag:
 
 - python3 main.py -c --case -rp path/to/folder/with/weights
 
 It takes the latest weights file if there are multiple weights in the folder. Also, you can specify if L2 or L1 regularization
-should be applied by the use of the -l flag {l1,l2}
+should be applied by the use of the -l flag {'l1', 'l2'}
 
 - python3 main.py -c --case -l l2
 
