@@ -24,7 +24,7 @@ class Datahandler:
         """
 
         root_path = pathlib.Path().resolve()
-        paths = join(root_path,'utils/paths.json2')
+        paths = join(root_path, 'utils/paths.json2')
 
         with open(paths) as f:
             my_dict = json.load(f)

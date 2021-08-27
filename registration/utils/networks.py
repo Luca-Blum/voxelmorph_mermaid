@@ -6,7 +6,6 @@ import pathlib
 from pathlib import Path
 import re
 import os
-
 import voxelmorph as vxm
 import neurite as ne
 import nibabel as nib
