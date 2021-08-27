@@ -341,11 +341,13 @@ class Evaluation:
         all_models = sorted(all_models)
         print(all_models)
 
-        data_temp1 = np.array([self.network.get_testing_data[indices[0]], self.network.get_testing_data[indices[1]]])
+        data_temp1 = np.array([self.network.get_testing_data()[indices[0]],
+                               self.network.get_testing_data()[indices[1]]])
 
         print(data_temp1)
 
-        data_temp2 = np.array([self.network.get_testing_data[indices[2]], self.network.get_testing_data[indices[3]]])
+        data_temp2 = np.array([self.network.get_testing_data()[indices[2]],
+                               self.network.get_testing_data()[indices[3]]])
 
         print(data_temp2)
 
@@ -371,8 +373,8 @@ class Evaluation:
 
             # evaluate T1w-T1w and T2w-T2w registration
             if self.network.dh.get_name() == 'inter_modal_t1t2':
-                data_temp_t1 = np.array([self.network.get_testing_data[indices[4]],
-                                         self.network.get_testing_data[indices[5]]])
+                data_temp_t1 = np.array([self.network.get_testing_data()[indices[4]],
+                                         self.network.get_testing_data()[indices[5]]])
 
                 test_input_temp, test_output_temp = self.network.predict_one_pair_vxm(data_temp_t1)
 
@@ -382,8 +384,8 @@ class Evaluation:
 
                 self.network.evaluate_losses_vxm(test_input_temp, test_output_temp, postfix='t1_p1' + str(index))
 
-                data_temp_t2 = np.array([self.network.get_testing_data[indices[6]],
-                                         self.network.get_testing_data[indices[7]]])
+                data_temp_t2 = np.array([self.network.get_testing_data()[indices[6]],
+                                         self.network.get_testing_data()[indices[7]]])
 
                 test_input_temp, test_output_temp = self.network.predict_one_pair_vxm(data_temp_t2)
 
