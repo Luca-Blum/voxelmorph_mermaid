@@ -313,7 +313,11 @@ class Evaluation:
 
         plt.savefig(fig_path)
 
-    def evaluate_models(self, nb_predictions=2):
+    def evaluate_models(self, nb_predictions=2, model_path=''):
+
+        if model_path != '':
+            self.network.load_vxm(model_path)
+
         test_input_temp, test_output_temp = self.network.predict_vxm(nb_predictions)
 
         self.network.evaluate_axes_vxm(test_input_temp, test_output_temp)
