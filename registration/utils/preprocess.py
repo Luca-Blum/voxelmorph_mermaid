@@ -70,7 +70,7 @@ class Preprocess:
         print()
         print()
         print(processed_files)
-
+        print(list(set(unprocessed_files).symmetric_difference(set(processed_files))))
         return None
 
         skull_stripping_input = path_unprocessed
