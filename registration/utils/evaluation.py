@@ -182,8 +182,8 @@ class Evaluation:
 
         print(models)
 
-        nb_train_pairs = 1
-        nb_test_pairs = 1
+        nb_train_pairs = 8
+        nb_test_pairs = 8
 
         train_generator = self.network.vxm_data_generator(self.network.get_training_data(), batch_size=1)
         test_generator = self.network.vxm_data_generator(self.network.get_testing_data(), batch_size=1)
