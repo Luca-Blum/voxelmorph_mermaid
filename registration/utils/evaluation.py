@@ -320,13 +320,13 @@ class Evaluation:
 
         test_input_temp, test_output_temp = self.network.predict_vxm(nb_predictions)
 
-        self.network.evaluate_axes_vxm(test_input_temp, test_output_temp)
+        self.evaluate_axes_vxm(test_input_temp, test_output_temp)
 
-        self.network.evaluate_displ_vxm(test_input_temp, test_output_temp)
+        self.evaluate_displ_vxm(test_input_temp, test_output_temp)
 
-        self.network.evaluate_losses_vxm(test_input_temp, test_output_temp)
+        self.evaluate_losses_vxm(test_input_temp, test_output_temp)
 
-        self.network.evaluate_loss_history(metric='eval')
+        self.evaluate_loss_history(metric='eval')
 
     def evaluate_pair_evolution(self, indices=None):
         """
@@ -361,19 +361,19 @@ class Evaluation:
 
             test_input_temp, test_output_temp = self.network.predict_one_pair_vxm(data_temp1)
 
-            self.network.evaluate_axes_vxm(test_input_temp, test_output_temp, postfix='p1_' + str(index))
+            self.evaluate_axes_vxm(test_input_temp, test_output_temp, postfix='p1_' + str(index))
 
-            self.network.evaluate_displ_vxm(test_input_temp, test_output_temp, postfix='p1_' + str(index))
+            self.evaluate_displ_vxm(test_input_temp, test_output_temp, postfix='p1_' + str(index))
 
-            self.network.evaluate_losses_vxm(test_input_temp, test_output_temp, postfix='p1_' + str(index))
+            self.evaluate_losses_vxm(test_input_temp, test_output_temp, postfix='p1_' + str(index))
 
             test_input_temp, test_output_temp = self.network.predict_one_pair_vxm(data_temp2)
 
-            self.network.evaluate_axes_vxm(test_input_temp, test_output_temp, postfix='p2_' + str(index))
+            self.evaluate_axes_vxm(test_input_temp, test_output_temp, postfix='p2_' + str(index))
 
-            self.network.evaluate_displ_vxm(test_input_temp, test_output_temp, postfix='p1_' + str(index))
+            self.evaluate_displ_vxm(test_input_temp, test_output_temp, postfix='p1_' + str(index))
 
-            self.network.evaluate_losses_vxm(test_input_temp, test_output_temp, postfix='p1_' + str(index))
+            self.evaluate_losses_vxm(test_input_temp, test_output_temp, postfix='p1_' + str(index))
 
             # evaluate T1w-T1w and T2w-T2w registration
             if self.network.dh.get_name() == 'inter_modal_t1t2':
@@ -382,19 +382,19 @@ class Evaluation:
 
                 test_input_temp, test_output_temp = self.network.predict_one_pair_vxm(data_temp_t1)
 
-                self.network.evaluate_axes_vxm(test_input_temp, test_output_temp, postfix='t1_p1_' + str(index))
+                self.evaluate_axes_vxm(test_input_temp, test_output_temp, postfix='t1_p1_' + str(index))
 
-                self.network.evaluate_displ_vxm(test_input_temp, test_output_temp, postfix='t1_p1_' + str(index))
+                self.evaluate_displ_vxm(test_input_temp, test_output_temp, postfix='t1_p1_' + str(index))
 
-                self.network.evaluate_losses_vxm(test_input_temp, test_output_temp, postfix='t1_p1_' + str(index))
+                self.evaluate_losses_vxm(test_input_temp, test_output_temp, postfix='t1_p1_' + str(index))
 
                 data_temp_t2 = np.array([self.network.get_testing_data()[indices[6]],
                                          self.network.get_testing_data()[indices[7]]])
 
                 test_input_temp, test_output_temp = self.network.predict_one_pair_vxm(data_temp_t2)
 
-                self.network.evaluate_axes_vxm(test_input_temp, test_output_temp, postfix='t2_p1_' + str(index))
+                self.evaluate_axes_vxm(test_input_temp, test_output_temp, postfix='t2_p1_' + str(index))
 
-                self.network.evaluate_displ_vxm(test_input_temp, test_output_temp, postfix='t2_p1_' + str(index))
+                self.evaluate_displ_vxm(test_input_temp, test_output_temp, postfix='t2_p1_' + str(index))
 
-                self.network.evaluate_losses_vxm(test_input_temp, test_output_temp, postfix='t2_p1_' + str(index))
+                self.evaluate_losses_vxm(test_input_temp, test_output_temp, postfix='t2_p1_' + str(index))
