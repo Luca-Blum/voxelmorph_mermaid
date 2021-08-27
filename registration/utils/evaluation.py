@@ -331,7 +331,7 @@ class Evaluation:
         """
 
         if indices is None:
-            indices = [0, 1, 2, 3, 5, 3, 0, 7]
+            indices = [0, 1, 2, 3, 0, 7, 5, 3]
 
         model_path = self.network.dh.get_processed_folder()
 
