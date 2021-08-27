@@ -549,7 +549,6 @@ class Networks:
 
             fig.savefig(fig_path)
 
-
     def evaluate_loss_history_model(self, model_path=None, metric='eval', plot=True, skip_first=False):
         """
         Creates plot of the loss history for the training and testing loss. The loss is approximated by 4 samples for
@@ -663,11 +662,7 @@ class Networks:
 
             plt.savefig(fig_path)
 
-        print(train_losses)
-        print(test_losses)
-
         return train_losses, test_losses, epochs
-    
 
     def evaluate_loss_history(self, metric='eval'):
         """
@@ -693,10 +688,12 @@ class Networks:
         
         for idx, model in enumerate(all_models):
             if idx == 0:
-                train_loss, test_loss, epoch = self.evaluate_loss_history_model(model_path=model, metric=metric, plot=False, skip_first=False)
+                train_loss, test_loss, epoch = self.evaluate_loss_history_model(model_path=model, metric=metric,
+                                                                                plot=False, skip_first=False)
                 max_epoch = epoch[-1]
             else:
-                train_loss, test_loss, epoch = self.evaluate_loss_history_model(model_path=model, metric=metric, plot=False, skip_first=True)
+                train_loss, test_loss, epoch = self.evaluate_loss_history_model(model_path=model, metric=metric,
+                                                                                plot=False, skip_first=True)
                 epoch = [e + max_epoch for e in epoch]
                 
                 max_epoch = epoch[-1]
@@ -704,11 +701,7 @@ class Networks:
             train_losses.extend(train_loss)
             test_losses.extend(test_loss)
             epochs.extend(epoch)
-            
-        print(train_losses)
-        print(test_losses)
-        print(epochs)
-        
+
         plt.figure()
 
         plt.plot(epochs, train_losses, '.-', label="training loss")
@@ -734,7 +727,6 @@ if __name__ == '__main__':
 
     nb_pairs_temp = 1
 
-    
     """
 
     nh_temp.load_vxm('/itet-stor/lblum/bmicdatasets_bmicnas01/Processed/Luca/T1_T2/results/vxm_model1629493595')
@@ -813,7 +805,3 @@ if __name__ == '__main__':
     """
     # TODO: evaluate_loss over multiple folders
     nh_temp.evaluate_loss_history(metric='eval')
-    
-    
-    
-    
