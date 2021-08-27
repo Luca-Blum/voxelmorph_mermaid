@@ -66,6 +66,7 @@ if __name__ == '__main__':
         nw_t1 = Networks(dh_t1, losses, loss_weights)
 
         if evaluate:
+            print("main evaluate: " + case)
             eval_t1 = Evaluation(nw_t1)
             eval_t1.evaluate_models()
             eval_t1.evaluate_pair_evolution()
@@ -80,11 +81,12 @@ if __name__ == '__main__':
             if preprocess:
                 pp_t1 = Preprocess(dh_t1)
                 pp_t1.preprocess()
-
+            """
             if retrain_path is None:
                 nw_t1.train_vxm()
             else:
                 nw_t1.train_from_weights_vxm(retrain_path)
+            """
 
     elif case == 't2':
 
@@ -99,6 +101,7 @@ if __name__ == '__main__':
 
         nw_t2 = Networks(dh_t2, losses, loss_weights)
         if evaluate:
+            print("main evaluate: " + case)
             eval_t2 = Evaluation(nw_t2)
             eval_t2.evaluate_models()
             eval_t2.evaluate_pair_evolution()
@@ -133,6 +136,7 @@ if __name__ == '__main__':
         nw_t1t2 = Networks(dh_t1t2, losses, loss_weights)
 
         if evaluate:
+            print("main evaluate: " + case)
             eval_t1t2 = Evaluation(nw_t1t2)
             eval_t1t2.evaluate_models()
             eval_t1t2.evaluate_pair_evolution()
@@ -173,6 +177,7 @@ if __name__ == '__main__':
         nh_testing = Networks(dh, losses, loss_weights)
 
         if evaluate:
+            print("main evaluate: " + case)
             eval_testing = Evaluation(nh_testing)
             eval_testing.evaluate_models()
             eval_testing.evaluate_pair_evolution()
@@ -184,6 +189,10 @@ if __name__ == '__main__':
             else:
                 print("main for: " + case + " with preprocessing = " + str(preprocess) +
                       " training from pretrained model")
+            if preprocess:
+                dh_testing = Datahandler('testing')
+                pp_testing = Preprocess(dh_testing)
+                pp_testing.preprocess()
 
             if retrain_path is None:
                 nh_testing.train_vxm()
