@@ -33,8 +33,8 @@ if __name__ == '__main__':
         parser.add_argument('-l', '--regularization_loss', required=False, default='l2',
                             help="define regularization loss {'l2', 'l1'}", choices=['l2', 'l1'])
 
-        parser.add_argument('-e', '--evaluation', required=False, default='False',
-                            help="evaluate a trained model", choices=['True', 'False'])
+        parser.add_argument('-e', '--evaluation', required=False, default=False,
+                            help="evaluate a trained model", type=bool, choices=[True, False])
 
         parser.add_argument('-ep', '--evaluation_path', required=False, default='',
                             help="evaluate a trained model at the given location")
@@ -47,6 +47,8 @@ if __name__ == '__main__':
         loss = args.regularization_loss
         evaluate = args.evaluation
         evaluate_path = args.evaluation_path
+        
+        print(evaluate)
 
     except KeyError:
         e = sys.exc_info()[0]
