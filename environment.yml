@@ -1,4 +1,4 @@
-name: /itet-stor/lblum/net_scratch/conda_envs/seminar
+name: seminar
 channels:
   - pytorch
   - conda-forge
