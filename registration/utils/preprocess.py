@@ -57,8 +57,9 @@ class Preprocess:
         pathlib.Path(path_masks).mkdir(parents=True, exist_ok=True)
 
         # Check if already preprocessed
-        unprocessed_files = [f for f in listdir(path_unprocessed) if isfile(join(path_unprocessed, f))]
-        processed_files = [f for f in listdir(path_results) if isfile(join(path_results, f))]
+        unprocessed_files = [f for f in listdir(path_unprocessed) if isfile(join(path_unprocessed, f))
+                             and "nii.gz" in str(f)]
+        processed_files = [f for f in listdir(path_results) if isfile(join(path_results, f)) and "nii.gz" in str(f)]
 
         if len(unprocessed_files) == len(processed_files):
             print("Data is already preprocessed. Skip preprocessing")
