@@ -57,7 +57,7 @@ class Preprocess:
         pathlib.Path(path_masks).mkdir(parents=True, exist_ok=True)
 
         # Check if already preprocessed
-        unprocessed_files = [f for f in listdir(path_unprocessed) if isfile(join(path_unprocessed, f))]
+        unprocessed_files = [f for f in listdir(path_unprocessed) if isfile(join(path_unprocessed, f)) and f[0]!='.']
         processed_files = [f for f in listdir(path_results) if isfile(join(path_results, f))]
 
         unprocessed_files = sorted(unprocessed_files)
