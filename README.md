@@ -54,6 +54,6 @@ A conda environment is provided in the file environment.yml. You can activate it
 
 conda env create -f environment.yml
  
-This should setup all dependencies except [HD-BET](https://github.com/MIC-DKFZ/HD-BET) and 
+This setups all dependencies except [HD-BET](https://github.com/MIC-DKFZ/HD-BET) and 
 [intensity-normalization](https://github.com/jcreinhold/intensity-normalization) which should be installed like 
 described in the corresponding linked repositories.
