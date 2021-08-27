@@ -331,7 +331,7 @@ class Evaluation:
         """
 
         if indices is None:
-            indices = [0, 1, 2, 3, 0, 3, 5, 7]
+            indices = [0, 1, 2, 3, 5, 3, 0, 7]
 
         model_path = self.network.dh.get_processed_folder()
 
@@ -378,19 +378,19 @@ class Evaluation:
 
                 test_input_temp, test_output_temp = self.network.predict_one_pair_vxm(data_temp_t1)
 
-                self.network.evaluate_axes_vxm(test_input_temp, test_output_temp, postfix='t1_p1' + str(index))
+                self.network.evaluate_axes_vxm(test_input_temp, test_output_temp, postfix='t1_p1_' + str(index))
 
-                self.network.evaluate_displ_vxm(test_input_temp, test_output_temp, postfix='t1_p1' + str(index))
+                self.network.evaluate_displ_vxm(test_input_temp, test_output_temp, postfix='t1_p1_' + str(index))
 
-                self.network.evaluate_losses_vxm(test_input_temp, test_output_temp, postfix='t1_p1' + str(index))
+                self.network.evaluate_losses_vxm(test_input_temp, test_output_temp, postfix='t1_p1_' + str(index))
 
                 data_temp_t2 = np.array([self.network.get_testing_data()[indices[6]],
                                          self.network.get_testing_data()[indices[7]]])
 
                 test_input_temp, test_output_temp = self.network.predict_one_pair_vxm(data_temp_t2)
 
-                self.network.evaluate_axes_vxm(test_input_temp, test_output_temp, postfix='t2_p1' + str(index))
+                self.network.evaluate_axes_vxm(test_input_temp, test_output_temp, postfix='t2_p1_' + str(index))
 
-                self.network.evaluate_displ_vxm(test_input_temp, test_output_temp, postfix='t2_p1' + str(index))
+                self.network.evaluate_displ_vxm(test_input_temp, test_output_temp, postfix='t2_p1_' + str(index))
 
-                self.network.evaluate_losses_vxm(test_input_temp, test_output_temp, postfix='t2_p1' + str(index))
+                self.network.evaluate_losses_vxm(test_input_temp, test_output_temp, postfix='t2_p1_' + str(index))
