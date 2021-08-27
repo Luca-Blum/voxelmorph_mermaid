@@ -450,7 +450,7 @@ class Networks:
                                        grid=[2, 3], titles=titles)
 
             name = 'axes' + str(i) + '_' + postfix + '.png'
-            fig_path = self.dh.get_processed_home()
+            fig_path = self.dh.get_plot_dir()
             fig_path = join(fig_path, name)
 
             fig.savefig(fig_path)
@@ -495,7 +495,7 @@ class Networks:
             fig.tight_layout()
 
             name = 'displ' + str(i) + '_' + postfix + '.png'
-            fig_path = self.dh.get_processed_home()
+            fig_path = self.dh.get_plot_dir()
             fig_path = join(fig_path, name)
 
             fig.savefig(fig_path)
@@ -543,7 +543,7 @@ class Networks:
             fig.tight_layout()
 
             name = 'pred_loss' + str(i) + '_' + postfix + '.png'
-            fig_path = self.dh.get_processed_home()
+            fig_path = self.dh.get_plot_dir()
             fig_path = join(fig_path, name)
 
             fig.savefig(fig_path)
@@ -656,7 +656,7 @@ class Networks:
             plt.show()
 
             name = 'loss_epoch_' + metric + '.png'
-            fig_path = self.dh.get_processed_home()
+            fig_path = self.dh.get_plot_dir()
             fig_path = join(fig_path, name)
 
             plt.savefig(fig_path)
@@ -711,7 +711,7 @@ class Networks:
         plt.show()
 
         name = 'loss_epoch_overall_' + metric + '.png'
-        fig_path = self.dh.get_processed_home()
+        fig_path = self.dh.get_plot_dir()
         fig_path = join(fig_path, name)
 
         plt.savefig(fig_path)

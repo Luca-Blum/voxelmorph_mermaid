@@ -89,6 +89,16 @@ class Datahandler:
 
         return path
 
+    def get_plot_dir(self):
+        """
+        :return: path to a directory for plots
+        """
+
+        home_path = self.get_processed_home()
+        plot_path = join(home_path, 'plots')
+        pathlib.Path(plot_path).mkdir(parents=True, exist_ok=True)
+        return plot_path
+
     def get_unprocessed_file_names(self):
         """
         :return: list of all unprocessed original data files

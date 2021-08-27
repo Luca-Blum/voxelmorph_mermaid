@@ -104,10 +104,12 @@ elif case == 't1t2':
     dh_t1t2 = Datahandler('inter_modal_t1t2')
 
     if preprocess:
-        pp_t1 = Preprocess(dh_t1t2)
+        dh_t1 = Datahandler('brain_t1')
+        pp_t1 = Preprocess(dh_t1)
         pp_t1.preprocess()
 
-        pp_t2 = Preprocess(dh_t1t2)
+        dh_t2 = Datahandler('brain_t2')
+        pp_t2 = Preprocess(dh_t2)
         pp_t2.preprocess()
 
     if loss == 'l2':
