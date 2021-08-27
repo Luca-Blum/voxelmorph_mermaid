@@ -52,7 +52,7 @@ your system.
 
 A conda environment is provided in the file environment.yml. You can activate it by using
 
-conda env create -f environment.yml
+conda env create --name seminar -f environment.yml
  
 This setups all dependencies except [HD-BET](https://github.com/MIC-DKFZ/HD-BET) and 
 [intensity-normalization](https://github.com/jcreinhold/intensity-normalization) which should be installed like 
