@@ -11,4 +11,4 @@ This is the final report that summarizes the two frameworks and analysis the res
 
 ## Usage of the code
 
-The usage of the code can be found in the directory [registration](registration/README.md)
+The code and the usage of it can be found in the directory [registration](registration/README.md)
