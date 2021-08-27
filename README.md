@@ -5,11 +5,11 @@ Two popular learning-based medical image registration frameworks ([voxelmorph](h
 and [mermaid](https://github.com/uncbiag/registration)) were reviewed. Further, [voxelmorph](https://github.com/voxelmorph/voxelmorph)
 was trained on intra-modal and inter-modal MR brain images and the corresponding registration performances were evaluated.
 
-## report.pdf
+## [Report](report.pdf)
 
 This is the final report that summarizes the two frameworks and analysis the results from the experiments
 
-## main.py
+## [main.py](main.py)
 
 This is the main script that was used for the experiments. It assumes a paths.json2 file that consist of a dictionary
 which contains the directory for the original data {t1, t2} and a 'home' directory where the results get stored. 
