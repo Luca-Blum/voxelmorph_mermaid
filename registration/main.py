@@ -70,7 +70,7 @@ if __name__ == '__main__':
         if evaluate:
             print("main evaluate: " + case)
             eval_t1 = Evaluation(nw_t1)
-            eval_t1.evaluate_models()
+            eval_t1.evaluate_models(model_path=evaluate_path)
             eval_t1.evaluate_pair_evolution()
 
         else:
@@ -104,7 +104,7 @@ if __name__ == '__main__':
         if evaluate:
             print("main evaluate: " + case)
             eval_t2 = Evaluation(nw_t2)
-            eval_t2.evaluate_models()
+            eval_t2.evaluate_models(model_path=evaluate_path)
             eval_t2.evaluate_pair_evolution()
 
         else:
@@ -139,7 +139,7 @@ if __name__ == '__main__':
         if evaluate:
             print("main evaluate: " + case)
             eval_t1t2 = Evaluation(nw_t1t2)
-            eval_t1t2.evaluate_models()
+            eval_t1t2.evaluate_models(model_path=evaluate_path)
             eval_t1t2.evaluate_pair_evolution()
 
         else:
@@ -180,7 +180,7 @@ if __name__ == '__main__':
         if evaluate:
             print("main evaluate: " + case)
             eval_testing = Evaluation(nh_testing)
-            eval_testing.evaluate_models()
+            eval_testing.evaluate_models(model_path=evaluate_path)
             eval_testing.evaluate_pair_evolution()
 
         else:
