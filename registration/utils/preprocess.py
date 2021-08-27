@@ -64,11 +64,11 @@ class Preprocess:
             print("Data is already preprocessed. Skip preprocessing")
 
         print(len(unprocessed_files))
-        print()
-        print()
         print(len(processed_files))
 
         print(unprocessed_files)
+        print()
+        print()
         print(processed_files)
 
         return None
