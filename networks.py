@@ -549,12 +549,15 @@ class Networks:
 
             fig.savefig(fig_path)
 
-    def evaluate_loss_history(self, model_path=None, metric='eval'):
+
+    def evaluate_loss_history_model(self, model_path=None, metric='eval', plot=True, skip_first=False):
         """
         Creates plot of the loss history for the training and testing loss. The loss is approximated by 4 samples for
         each case.
         :param model_path: path to the model to evaluate
         :param metric: metric for evaluation. Can be 'eval' to use tf evaluate method, 'mse' or 'ncc'
+        :param plot: can be disabled for loss calculation over multiple model
+        :param skip_first: skip first epoch 
         :return: train and test loss
         """
 
@@ -584,8 +587,8 @@ class Networks:
 
         print(models)
 
-        nb_train_pairs = 4
-        nb_test_pairs = 4
+        nb_train_pairs = 1
+        nb_test_pairs = 1
 
         train_generator = self.vxm_data_generator(self.train, batch_size=1)
         test_generator = self.vxm_data_generator(self.test, batch_size=1)
@@ -594,7 +597,10 @@ class Networks:
         test_losses = []
         epochs = []
 
-        for model in models:
+        for idx, model in enumerate(models):
+            if idx == 0 and skip_first:
+                continue
+        
             number = int(model[-9:-5])
             print(number)
             epochs.append(number)
@@ -641,6 +647,68 @@ class Networks:
 
                 test_losses.append(test_loss_image.mean())
 
+        if plot:
+            plt.figure()
+
+            plt.plot(epochs, train_losses, '.-', label="training loss")
+            plt.plot(epochs, test_losses, '.-', label="testing loss")
+            plt.ylabel(metric + ' loss')
+            plt.xlabel('epoch')
+            plt.legend()
+            plt.show()
+
+            name = 'loss_epoch_' + metric + '.png'
+            fig_path = self.dh.get_processed_home()
+            fig_path = join(fig_path, name)
+
+            plt.savefig(fig_path)
+
+        print(train_losses)
+        print(test_losses)
+
+        return train_losses, test_losses, epochs
+    
+
+    def evaluate_loss_history(self, metric='eval'):
+        """
+        Creates plot of the loss history for the training and testing loss over subsequently trained models
+        :param metric: metric for evaluation. Can be 'eval' to use tf evaluate method, 'mse' or 'ncc'
+        :return: train and test loss
+        """
+        
+        self.build_model_vxm()
+        
+        model_path = self.dh.get_processed_folder()
+
+        all_models = [join(model_path, f) for f in listdir(model_path) if
+                      isdir(join(model_path, f)) and 'results' not in f]
+                      
+        all_models = sorted(all_models)
+        print(all_models)
+        
+        train_losses = []
+        test_losses = []
+        epochs = []
+        max_epoch = -1
+        
+        for idx, model in enumerate(all_models):
+            if idx == 0:
+                train_loss, test_loss, epoch = self.evaluate_loss_history_model(model_path=model, metric=metric, plot=False, skip_first=False)
+                max_epoch = epoch[-1]
+            else:
+                train_loss, test_loss, epoch = self.evaluate_loss_history_model(model_path=model, metric=metric, plot=False, skip_first=True)
+                epoch = [e + max_epoch for e in epoch]
+                
+                max_epoch = epoch[-1]
+                
+            train_losses.extend(train_loss)
+            test_losses.extend(test_loss)
+            epochs.extend(epoch)
+            
+        print(train_losses)
+        print(test_losses)
+        print(epochs)
+        
         plt.figure()
 
         plt.plot(epochs, train_losses, '.-', label="training loss")
@@ -650,13 +718,12 @@ class Networks:
         plt.legend()
         plt.show()
 
-        name = 'loss_epoch_' + metric + '.png'
+        name = 'loss_epoch_overall_' + metric + '.png'
         fig_path = self.dh.get_processed_home()
         fig_path = join(fig_path, name)
 
         plt.savefig(fig_path)
 
-        return train_losses, test_losses
 
 if __name__ == '__main__':
     dh_temp = Datahandler('inter_modal_t1t2')
@@ -667,7 +734,8 @@ if __name__ == '__main__':
 
     nb_pairs_temp = 1
 
-    # TODO: evaluate_loss over multiple folders
+    
+    """
 
     nh_temp.load_vxm('/itet-stor/lblum/bmicdatasets_bmicnas01/Processed/Luca/T1_T2/results/vxm_model1629493595')
 
@@ -732,6 +800,7 @@ if __name__ == '__main__':
     nh_temp.evaluate_displ_vxm(test_input_temp, test_output_temp, postfix='t2_p1_second')
 
     nh_temp.evaluate_losses_vxm(test_input_temp, test_output_temp, postfix='t2_p1_second')
+    """
 
     """		
     test_input_temp, test_output_temp = nh_temp.predict_vxm(nb_pairs_temp)
@@ -742,5 +811,9 @@ if __name__ == '__main__':
     
     nh_temp.evaluate_losses_vxm(test_input_temp, test_output_temp)
     """
-
-# nh_temp.evaluate_loss_history(metric='eval')
+    # TODO: evaluate_loss over multiple folders
+    nh_temp.evaluate_loss_history(metric='eval')
+    
+    
+    
+    
