@@ -161,10 +161,12 @@ if __name__ == '__main__':
                 pp_t2 = Preprocess(dh_t2)
                 pp_t2.preprocess()
 
+            """
             if retrain_path is None:
                 nw_t1t2.train_vxm()
             else:
                 nw_t1t2.train_from_weights_vxm(retrain_path)
+            """
 
     # Testing
     else:
@@ -190,15 +192,8 @@ if __name__ == '__main__':
 
             if retrain_path is None:
                 print("main for: " + case + " with preprocessing = " + str(preprocess) + " training from scratch")
+                nh_testing.train_vxm()
             else:
                 print("main for: " + case + " with preprocessing = " + str(preprocess) +
                       " training from pretrained model")
-            if preprocess:
-                dh_testing = Datahandler('testing')
-                pp_testing = Preprocess(dh_testing)
-                pp_testing.preprocess()
-
-            if retrain_path is None:
-                nh_testing.train_vxm()
-            else:
                 nh_testing.train_from_weights_vxm(retrain_path)
