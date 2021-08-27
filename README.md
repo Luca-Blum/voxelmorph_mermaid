@@ -43,3 +43,17 @@ should be applied by the use of the -l flag {l1,l2}
 
 python main.py -c case -l l2
 
+## [main.sh](main.sh)
+
+This script can be used to submit a job to a slurm cluster. The path for the conda environment needs to be adapted to 
+your system.
+
+## Setup
+
+A conda environment is provided in the file environment.yml. You can activate it by using
+
+conda env create -f environment.yml
+ 
+This should setup all dependencies except [HD-BET](https://github.com/MIC-DKFZ/HD-BET) and 
+[intensity-normalization](https://github.com/jcreinhold/intensity-normalization) which should be installed like 
+described in the corresponding linked repositories.
