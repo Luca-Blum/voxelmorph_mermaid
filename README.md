@@ -7,7 +7,7 @@ was trained on intra-modal and inter-modal MR brain images and the corresponding
 
 ## [Report](report.pdf)
 
-This is the final report that summarizes the two frameworks and analysis the results from the experiments
+This is the final report that summarizes the two frameworks and analyses the results from the experiments
 
 ## Usage of the code
 
