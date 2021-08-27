@@ -208,6 +208,13 @@ class Datahandler:
 
         return files_t1 + files_t2
 
+    def get_name(self):
+        """
+        :return: case name
+        """
+
+        return self.name
+
 
 if __name__ == '__main__':
     dh_t1 = Datahandler('brain_t1')

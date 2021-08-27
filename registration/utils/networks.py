@@ -415,6 +415,12 @@ class Networks:
 
         return self.test
 
+    def get_vol_shape(self):
+        """
+        :return: shape of image volumes
+        """
+        return self.vol_shape
+
     def evaluate_axes_vxm(self, test_input, test_output, postfix=''):
         """
         Creates a plot for the given input and the corresponding predicted output.
@@ -802,5 +808,5 @@ if __name__ == '__main__':
     
     nh_temp.evaluate_losses_vxm(test_input_temp, test_output_temp)
     """
-    # TODO: evaluate_loss over multiple folders
+
     nh_temp.evaluate_loss_history(metric='eval')
