@@ -100,7 +100,7 @@ if __name__ == '__main__':
         nw_t2 = Networks(dh_t2, losses, loss_weights)
         if evaluate:
             eval_t2 = Evaluation(nw_t2)
-            # eval_t2.evaluate_models()
+            eval_t2.evaluate_models()
             eval_t2.evaluate_pair_evolution()
 
         else:
@@ -134,7 +134,7 @@ if __name__ == '__main__':
 
         if evaluate:
             eval_t1t2 = Evaluation(nw_t1t2)
-            eval_t1t2.evaluate_models()
+            # eval_t1t2.evaluate_models()
             eval_t1t2.evaluate_pair_evolution()
 
         else:
