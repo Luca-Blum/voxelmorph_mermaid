@@ -57,13 +57,12 @@ class Preprocess:
         pathlib.Path(path_masks).mkdir(parents=True, exist_ok=True)
 
         # Check if already preprocessed
-        unprocessed_files = [f for f in listdir(path_unprocessed) if isfile(join(path_unprocessed, f)) and f[0]!='.']
+        unprocessed_files = [f for f in listdir(path_unprocessed) if isfile(join(path_unprocessed, f)) and '.' != f[0]]
         processed_files = [f for f in listdir(path_results) if isfile(join(path_results, f))]
 
         if len(unprocessed_files) == len(processed_files):
             print("Data is already preprocessed. Skip preprocessing")
-
-        return None
+            return None
 
         skull_stripping_input = path_unprocessed
         skull_stripping_output = path_results
