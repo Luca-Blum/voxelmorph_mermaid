@@ -57,23 +57,20 @@ class Preprocess:
         pathlib.Path(path_masks).mkdir(parents=True, exist_ok=True)
 
         # Check if already preprocessed
-        unprocessed_files = [f for f in listdir(path_unprocessed) if isfile(join(path_unprocessed, f))
-                             and "nii.gz" in str(f)]
-        processed_files = [f for f in listdir(path_results) if isfile(join(path_results, f)) and "nii.gz" in str(f)]
+        unprocessed_files = [f for f in listdir(path_unprocessed) if isfile(join(path_unprocessed, f))]
+        processed_files = [f for f in listdir(path_results) if isfile(join(path_results, f))]
+
+        unprocessed_files = sorted(unprocessed_files)
+        processed_files = sorted(processed_files)
+
+        for idx, unpr in enumerate(unprocessed_files):
+            if unpr[0:6] != processed_files[idx][0:6]:
+                print(unpr)
+                print(processed_files[idx])
 
         if len(unprocessed_files) == len(processed_files):
             print("Data is already preprocessed. Skip preprocessing")
 
-        print(len(unprocessed_files))
-        print(len(processed_files))
-
-        print(unprocessed_files)
-        print()
-        print()
-        print(processed_files)
-        print("SETS")
-        print()
-        print(list(set(unprocessed_files) - set(processed_files)))
         return None
 
         skull_stripping_input = path_unprocessed
