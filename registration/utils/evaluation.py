@@ -313,7 +313,7 @@ class Evaluation:
 
         plt.savefig(fig_path)
 
-    def evaluate_models(self, nb_predictions=2, metric='eval'):
+    def evaluate_models(self, nb_predictions=2):
         test_input_temp, test_output_temp = self.network.predict_vxm(nb_predictions)
 
         self.network.evaluate_axes_vxm(test_input_temp, test_output_temp)
@@ -322,7 +322,7 @@ class Evaluation:
 
         self.network.evaluate_losses_vxm(test_input_temp, test_output_temp)
 
-        self.network.evaluate_loss_history(metric=metric)
+        self.network.evaluate_loss_history(metric='eval')
 
     def evaluate_pair_evolution(self, indices=None):
         """
