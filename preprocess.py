@@ -9,14 +9,32 @@ os.environ['MKL_THREADING_LAYER'] = 'GNU'
 
 
 class Preprocess:
+    """
+    Class that takes care of the preprocessing of the data
+    """
 
     def __init__(self, datahandler):
+        """
+        :param datahandler: Datahandler object that takes care of the input and output of the files
+        """
+
         self.dh = datahandler
         self.name = self.dh.name
 
     def preprocess(self, preprocess=False, cpu=False):
-
-        # Preprocess the data
+        """
+        preprocess the data. The standard pipeline is
+        - skull stripping
+        - affine alignment
+        - nyul intensity normalization
+        Furthermore you can enable additional preprocessing by setting preprocess=True. This will resample, N4-correct
+        and reorient the image
+        skull stripping is done by https://github.com/MIC-DKFZ/HD-BET
+        the rest is done by https://github.com/jcreinhold/intensity-normalization
+        :param preprocess: True for further preprocessing
+        :param cpu: run on cpu (test-mode)
+        :return: None
+        """
 
         path_unprocessed = self.dh.get_unprocessed_folder()
 
@@ -34,7 +52,6 @@ class Preprocess:
         path_masks = join(path_output, "masks")
 
         # create necessary directories
-
         pathlib.Path(path_preprocessed).mkdir(parents=True, exist_ok=True)
         pathlib.Path(path_results).mkdir(parents=True, exist_ok=True)
         pathlib.Path(path_masks).mkdir(parents=True, exist_ok=True)
@@ -78,7 +95,6 @@ class Preprocess:
 
         if not false_ordering:
             # clear preprocessed
-
             subprocess.run(["rm -r " + path_preprocessed], check=True, stdout=subprocess.PIPE,
                                      universal_newlines=True, shell=True)
 
@@ -92,7 +108,6 @@ class Preprocess:
 
         if not false_ordering:
             # clear results
-
             subprocess.run(["rm -r " + path_results], check=True, stdout=subprocess.PIPE,
                                      universal_newlines=True, shell=True)
 
@@ -101,7 +116,6 @@ class Preprocess:
 
         else:
             # clear preprocessed
-
             subprocess.run(["rm -r " + path_preprocessed], check=True, stdout=subprocess.PIPE,
                                      universal_newlines=True, shell=True)
 
@@ -123,8 +137,17 @@ class Preprocess:
             os.rename(path_results, path_preprocessed)
 
     def skull_stripping(self, skull_stripping_input, skull_stripping_output, path_masks, cpu=False):
+        """
+        skull strips the data using HD-BET
+        https://github.com/MIC-DKFZ/HD-BET
 
-        # Skull stripping the data
+        :param skull_stripping_input: folder that contains file that need to be skull stripped
+        :param skull_stripping_output: folder for storing the resulting skull stripped images
+        :param path_masks: path to folder to store the mask of the skull stripping
+        :param cpu: run on CPU
+        :return: None
+        """
+
         print("skull stripping")
 
         if cpu:

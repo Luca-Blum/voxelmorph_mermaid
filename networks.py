@@ -21,8 +21,19 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 
 class Networks:
+    """
+    Class for training the voxelmorph and mermaid networks
+    So far only voxelmorph is supported
+    """
 
     def __init__(self, datahandler, losses=None, loss_weights=None, train_size=0.8):
+        """
+        :param datahandler: Datahandler object that takes care of the input and output of the files
+        :param losses: loss functions. Default is NCC and L2
+        :param loss_weights: weights of the corresponding loss functions
+        :param train_size: train test split [0,1]
+        """
+
         self.dh = datahandler
         self.name = self.dh.name
 
@@ -48,6 +59,11 @@ class Networks:
         self.vxm_model = None
 
     def _create_train_test_split(self, train_size):
+        """
+        Splits data into training and testing data
+        :param train_size: size of the training set [0,1]
+        :return: Tuple of lists where a list contains the file names
+        """
 
         files = self.dh.get_processed_file_names()
 
@@ -61,44 +77,35 @@ class Networks:
                                                     self.padding[2][0] + self.padding[2][1],
                                                     self.padding[3][0] + self.padding[3][1]])
 
-        """		
-        train_data = np.array([nib.load(f).get_fdata() for f in train_files])
-        test_data = np.array([nib.load(f).get_fdata() for f in test_files])
-
-        train_data = np.pad(train_data,((0,0),(5,5),(3,3),(5,5)), 'constant')
-        test_data = np.pad(test_data,((0,0),(5,5),(3,3),(5,5)), 'constant')
-        """
-
         return np.array(train_files), np.array(test_files)
 
     def vxm_data_generator(self, x_data, batch_size=32):
-        # Adapted from voxelmorph tutorial :
-        # https://colab.research.google.com/drive/1WiqyF7dCdnNBIANEY80Pxw_mVz4fyV-S?usp=sharing#scrollTo=dJcCEElPPXN2
         """
+        Adapted from voxelmorph tutorial :
+        https://colab.research.google.com/drive/1WiqyF7dCdnNBIANEY80Pxw_mVz4fyV-S?usp=sharing#scrollTo=dJcCEElPPXN2
         Generator that takes in array of file names, and yields data for
         our custom vxm model.
 
         inputs:  moving [bs, H, W, D], fixed image [bs, H, W, D]
         outputs: moved image [bs, H, W, D], zero-gradient [bs, H, W, 3]
-        """
 
-        # preliminary sizing
-        # vol_shape = x_data.shape[1:] # extract data shape
+        It is guaranteed that a pair of moving and target images are not the same
+
+        :param x_data: data set used to generate the samples
+        :param batch_size: size of batch
+        :return: generator that yields input and output to networks
+        """
 
         ndims = len(self.vol_shape)
 
         # prepare a zero array the size of the deformation
-        # we'll explain this below
         zero_phi = np.zeros([batch_size, *self.vol_shape, ndims])
 
         while True:
             # prepare inputs:
-            # images need to be of the size [batch_size, H, W, 1]
-
             r = np.arange(len(x_data))
             idx1 = np.random.choice(r, size=batch_size)
 
-            # idx1 = np.random.randint(0, x_data.shape[0], size=batch_size)
             moving_images = x_data[idx1]
 
             moving_images = np.array([nib.load(f).get_fdata() for f in moving_images])
@@ -108,7 +115,6 @@ class Networks:
             r = np.delete(r, idx1)
             idx2 = np.random.choice(r, size=batch_size)
 
-            # idx2 = np.random.randint(0, x_data.shape[0], size=batch_size)
             fixed_images = x_data[idx2]
 
             fixed_images = np.array([nib.load(f).get_fdata() for f in fixed_images])
@@ -126,6 +132,9 @@ class Networks:
             yield inputs, outputs
 
     def build_model_vxm(self):
+        """
+        createds a default voxelmorph model
+        """
 
         nb_features = [[16, 32, 32, 32], [32, 32, 32, 32, 32, 16, 16]]
 
@@ -140,6 +149,10 @@ class Networks:
                                loss_weights=self.loss_weights)
 
     def train_vxm(self):
+        """
+        trains the voxelmorph model and creates a plot of the loss evolution
+        :return: None
+        """
 
         print("train voxelmorph for " + self.name)
 
@@ -169,8 +182,8 @@ class Networks:
         # use this if you want to train with every pair in each epoch
         # nb_pairs = self.train_size * (self.train_size - 1)/2.
 
-        nb_pairs = 1
-        epochs = 1
+        nb_pairs = 60
+        epochs = 100
 
         steps_per_epoch = np.ceil(nb_pairs / batch_size)
 
@@ -192,6 +205,11 @@ class Networks:
         return None
 
     def train_from_weights_vxm(self, model_path=None):
+        """
+        trains a voxelmorph model from given weights and creates a plot of the loss evolution
+        :param model_path: path to the folder that contains the weights for the model
+        :return: None
+        """
 
         self.load_vxm(model_path)
 
@@ -242,10 +260,21 @@ class Networks:
         return None
 
     def predict_vxm(self, nb_pairs=10):
+        """
+        predicts nb_pairs samples from the test set
+        :param nb_pairs: number of predictions
+        :return: Tuple of lists where the first element contains the warped image and the second the displacement fields
+        """
 
         return self.predict_data_vxm(self.test, nb_pairs)
 
     def predict_data_vxm(self, data, nb_pairs=10):
+        """
+        predicts nb_pairs samples from the given data set
+        :param data: data used for the prediction
+        :param nb_pairs: number of predictions
+        :return:Tuple of lists where the first element contains the warped image and the second the displacement fields
+        """
 
         if self.vxm_model is None:
             self.load_vxm()
@@ -264,6 +293,11 @@ class Networks:
         return val_inputs, val_preds
 
     def predict_one_pair_vxm(self, data):
+        """
+        predicts one pair given by data. Useful for non-random prediction/ not using the data generator
+        :param data: List of TWO filenames
+        :return: input and output of network
+        """
 
         if self.vxm_model is None:
             self.load_vxm()
@@ -298,6 +332,12 @@ class Networks:
         return [val_input], [val_pred]
 
     def load_vxm(self, model_path=''):
+        """
+        load a stored voxelmorph model
+        :param model_path: path to the folder that contains the weights. If not given, the method searches for a model
+        and uses the latest checkpoint
+        :return: None
+        """
 
         self.build_model_vxm()
 
@@ -331,6 +371,10 @@ class Networks:
         self.vxm_model.load_weights(latest)
 
     def train_mermaid(self):
+        """
+        train a mermaid network. Unfortunately this could not achieved.
+        :return: None
+        """
 
         libs_path = self.dh.get_data_path("libs")
 
@@ -350,18 +394,37 @@ class Networks:
         return None
 
     def train_both(self):
+        """
+        train voxelmorph and mermaid one after another
+        :return: None
+        """
+
         self.train_vxm()
         self.train_mermaid()
 
     def get_training_data(self):
+        """
+        :return: List of file names for training data
+        """
+
         return self.train
 
     def get_testing_data(self):
+        """
+        :return: List of file names for testing data
+        """
+
         return self.test
 
     def evaluate_axes_vxm(self, test_input, test_output, postfix=''):
-
-        # moving and warped each direction
+        """
+        Creates a plot for the given input and the corresponding predicted output.
+        The plot shows the mid-slice from the sagital, coronal and traverse axis.
+        :param test_input: sample that was given to the network to create a prediction
+        :param test_output: prediction for the given sample
+        :param postfix: added to the filename
+        :return: None
+        """
 
         vol_shape = test_input[0][0].shape[1:]
 
@@ -394,8 +457,14 @@ class Networks:
             fig.savefig(fig_path)
 
     def evaluate_displ_vxm(self, test_input, test_output, postfix=''):
-
-        # moving and warped each direction
+        """
+        Creates a plot for the given input and the corresponding predicted output.
+        The plot shows the mid-slice from the coronal view and shows the displacement field
+        :param test_input: sample that was given to the network to create a prediction
+        :param test_output: prediction for the given sample
+        :param postfix: added to the filename
+        :return: None
+        """
 
         vol_shape = test_input[0][0].shape[1:]
 
@@ -433,6 +502,15 @@ class Networks:
             fig.savefig(fig_path)
 
     def evaluate_losses_vxm(self, test_input, test_output, loss='mse', postfix=''):
+        """
+        Creates a plot for the given input and the corresponding predicted output.
+        The plot shows the difference of the warped moving image to the target image
+        :param test_input: sample that was given to the network to create a prediction
+        :param test_output: prediction for the given sample
+        :param loss: metric to use to calculate the difference {'mse', ncc}
+        :param postfix: added to the filename
+        :return: None
+        """
 
         vol_shape = test_input[0][0].shape[1:]
 
@@ -458,7 +536,6 @@ class Networks:
             if loss == 'mse':
                 mid_slices_loss = np.square(np.subtract(mid_slices_pred[1], mid_slices_fixed[1]))
             else:
-                # mid_slices_loss = scipy.signal.correlate2d(mid_slices_fixed[1], mid_slices_pred[1])
                 mid_slices_loss = normxcorr2(mid_slices_fixed[1], mid_slices_pred[1])
 
             images = [mid_slices_moving[1], mid_slices_fixed[1], mid_slices_pred[1], mid_slices_loss]
@@ -473,6 +550,13 @@ class Networks:
             fig.savefig(fig_path)
 
     def evaluate_loss_history(self, model_path=None, metric='eval'):
+        """
+        Creates plot of the loss history for the training and testing loss. The loss is approximated by 4 samples for
+        each case.
+        :param model_path: path to the model to evaluate
+        :param metric: metric for evaluation. Can be 'eval' to use tf evaluate method, 'mse' or 'ncc'
+        :return: train and test loss
+        """
 
         self.build_model_vxm()
 
@@ -500,7 +584,7 @@ class Networks:
 
         print(models)
 
-        nb_train_pairs = 8
+        nb_train_pairs = 4
         nb_test_pairs = 4
 
         train_generator = self.vxm_data_generator(self.train, batch_size=1)
@@ -535,7 +619,6 @@ class Networks:
                     if metric == 'mse':
                         train_loss_image = np.add(train_loss_image, np.square(np.subtract(fixed, warped)))
                     else:
-                        # mid_slices_loss = scipy.signal.correlate2d(mid_slices_fixed[1], mid_slices_pred[1])
                         train_loss_image = np.add(train_loss_image, normxcorr2(fixed, warped, mode="same"))
 
                 train_losses.append(train_loss_image.mean())
@@ -554,7 +637,6 @@ class Networks:
                         test_loss_image = np.add(test_loss_image, np.square(np.subtract(fixed, warped)))
                     else:
                         metric = 'mncc'
-                        # mid_slices_loss = scipy.signal.correlate2d(mid_slices_fixed[1], mid_slices_pred[1])
                         test_loss_image = np.add(test_loss_image, normxcorr2(fixed, warped, mode="same"))
 
                 test_losses.append(test_loss_image.mean())
@@ -574,6 +656,7 @@ class Networks:
 
         plt.savefig(fig_path)
 
+        return train_losses, test_losses
 
 if __name__ == '__main__':
     dh_temp = Datahandler('inter_modal_t1t2')
