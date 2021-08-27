@@ -1,4 +1,3 @@
-from utils import Datahandler
 from os.path import isfile, join
 from os import listdir
 import pathlib
