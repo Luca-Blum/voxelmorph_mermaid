@@ -63,6 +63,8 @@ class Preprocess:
         if len(unprocessed_files) == len(processed_files):
             print("Data is already preprocessed. Skip preprocessing")
 
+        print(len(unprocessed_files))
+        print(len(processed_files))
         return None
 
         skull_stripping_input = path_unprocessed
