@@ -55,7 +55,7 @@ loss over all models. If you want to evaluate a specific model you can specify t
 
 This script can be used to submit a job to a slurm cluster. The path for the conda environment needs to be adapted to 
 your system. Additionally, check that the correct conda environment (seminar) is loaded. Creating the environment is 
-described below.
+described below. Also, do not forget to create a log folder.
 
 ## Setup
 

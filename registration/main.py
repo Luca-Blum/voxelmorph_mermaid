@@ -83,12 +83,11 @@ if __name__ == '__main__':
             if preprocess:
                 pp_t1 = Preprocess(dh_t1)
                 pp_t1.preprocess()
-            """
+
             if retrain_path is None:
                 nw_t1.train_vxm()
             else:
                 nw_t1.train_from_weights_vxm(retrain_path)
-            """
 
     elif case == 't2':
 
@@ -119,12 +118,10 @@ if __name__ == '__main__':
                 pp_t2 = Preprocess(dh_t2)
                 pp_t2.preprocess()
 
-            """
             if retrain_path is None:
                 nw_t2.train_vxm()
             else:
                 nw_t2.train_from_weights_vxm(retrain_path)
-            """
 
     elif case == 't1t2':
 
@@ -161,12 +158,10 @@ if __name__ == '__main__':
                 pp_t2 = Preprocess(dh_t2)
                 pp_t2.preprocess()
 
-            """
             if retrain_path is None:
                 nw_t1t2.train_vxm()
             else:
                 nw_t1t2.train_from_weights_vxm(retrain_path)
-            """
 
     # Testing
     else:
