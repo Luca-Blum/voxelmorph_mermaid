@@ -7,7 +7,7 @@ Additionally, the corresponding performance was evaluated.
 ## [main.py](main.py)
 
 This is the main script that was used for the experiments. It assumes a paths.json2 file that consist of a dictionary
-which contains the directory for the original data {brain_t1, brain_t2} and a 'home' directory where the results 
+which contains the directory for the original data {'brain_t1', 'brain_t2'} and a 'home' directory where the results 
 get stored. T1 weighted brain MRI and T2 weighted brain MRI are supported. The original data folder is expected to 
 contain *nii.gz files.
 
