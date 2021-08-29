@@ -41,7 +41,7 @@ corresponding weights by using the -rp flag:
 It takes the latest weights file if there are multiple weights in the folder. 
 
 Also, you can specify if L2 or L1 regularization
-should be applied by the use of the -l flag {'l1', 'l2'}.
+should be applied by the use of the -l flag {l1, l2}.
 
 - python3 main.py -c --case -l l2
 
