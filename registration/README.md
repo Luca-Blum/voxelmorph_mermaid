@@ -13,9 +13,9 @@ contain *nii.gz files.
 
 For registration there are three possible cases.
 
-- t1: &nbsp;&nbsp;&nbsp;&nbsp;  intra-modal T1w MRI
-- t2:  &nbsp;&nbsp;&nbsp;&nbsp; intra-modal T2w MRI
-- t1t2: &nbsp; inter-modal T1w-T2w MRI
+- t1: &nbsp;&nbsp;&nbsp;&nbsp;  intra-modal T1w MRI registration
+- t2:  &nbsp;&nbsp;&nbsp;&nbsp; intra-modal T2w MRI registration
+- t1t2: &nbsp; inter-modal T1w-T2w MRI registration
 
 The base usage is:
 
