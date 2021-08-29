@@ -325,8 +325,11 @@ class Evaluation:
         self.evaluate_displ_vxm(test_input_temp, test_output_temp)
 
         self.evaluate_losses_vxm(test_input_temp, test_output_temp)
-
-        self.evaluate_loss_history(metric='eval')
+        
+        if model_path != '':
+            self.evaluate_loss_history_model(model_path=model_path, metric='eval', plot=True, skip_first=False)
+        else:
+            self.evaluate_loss_history(metric='eval')
 
     def evaluate_pair_evolution(self, indices=None):
         """
