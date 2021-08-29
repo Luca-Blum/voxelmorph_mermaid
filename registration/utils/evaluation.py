@@ -321,6 +321,7 @@ class Evaluation:
         :param model_path: path to model to evaluate. If empty the latest model will be used
         :return: None
         """
+
         if model_path != '':
             self.network.load_vxm(model_path)
 
