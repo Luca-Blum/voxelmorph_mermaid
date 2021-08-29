@@ -3,7 +3,7 @@
 This repository shows the work done in a Seminar in FS 2021 at ETH Zürich under the supervision of Professor Ender 
 Konukoglu. Two popular learning-based medical image registration frameworks 
 ([voxelmorph](https://github.com/voxelmorph/voxelmorph) and 
-[mermaid](https://github.com/uncbiag/registration)) were reviewed. Further, 
+[mermaid](https://github.com/uncbiag/registration)) were reviewed. Furthermore, 
 [voxelmorph](https://github.com/voxelmorph/voxelmorph) was trained on intra-modal and inter-modal MR brain images 
 and the corresponding registration performances were evaluated.
 
