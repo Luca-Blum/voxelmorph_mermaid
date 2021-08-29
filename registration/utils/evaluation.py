@@ -314,7 +314,13 @@ class Evaluation:
         plt.savefig(fig_path)
 
     def evaluate_models(self, nb_predictions=2, model_path=''):
-
+        """
+        evaluates the latest model and creates a loss history for subsequently trained models. If a model path is given
+        then the loss history is only for the specified model
+        :param nb_predictions: number of predictions used to create various plots
+        :param model_path: path to model to evaluate. If empty the latest model will be used
+        :return: None
+        """
         if model_path != '':
             self.network.load_vxm(model_path)
 
