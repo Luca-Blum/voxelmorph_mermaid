@@ -214,11 +214,3 @@ class Datahandler:
         """
 
         return self.name
-
-
-if __name__ == '__main__':
-    dh_t1 = Datahandler('brain_t1')
-    dh_t1t2 = Datahandler('inter_modal_t1t2')
-
-    print(dh_t1t2.get_processed_folder())
-    print(dh_t1t2.get_processed_file_names())
