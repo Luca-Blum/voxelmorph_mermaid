@@ -4,7 +4,7 @@ This repository shows the work done in a Seminar in FS 2021 at ETH Zürich under
 Konukoglu. Two popular learning-based medical image registration frameworks 
 ([voxelmorph](https://github.com/voxelmorph/voxelmorph) and 
 [mermaid](https://github.com/uncbiag/registration)) were reviewed. Furthermore, 
-[voxelmorph](https://github.com/voxelmorph/voxelmorph) was trained on intra-modal and inter-modal MR brain images 
+[voxelmorph](https://github.com/voxelmorph/voxelmorph) was trained on intra-modal and inter-modal volumetric MR brain images 
 and the corresponding registration performances were evaluated.
 
 ## [Report](report.pdf)
