@@ -19,6 +19,6 @@ selected figures were added to the presentation. Additionally, some plots from m
 were not the final results because after the presentation the networks were trained further. The final results are 
 presented in the [report](report.pdf)
 
-## Usage of the code
+## Usage of the [code](registration/README.md)
 
 The code and the usage of it can be found in the directory [registration](registration/README.md)
